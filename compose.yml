@@ -1,0 +1,27 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./docker/server/Dockerfile
+    ports:
+      - 2434:2434
+    depends_on: ["db"]
+    tty: true
+    volumes:
+      - ./server:/go/src/takamori
+    container_name: server
+  db:
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    restart: always
+    volumes:
+      - ./db/persistent:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: takamori
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: takamori
+    ports:
+      - "3306:3306"
+    container_name: db
