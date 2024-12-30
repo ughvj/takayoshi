@@ -22,9 +22,11 @@ func Init(isDryrun bool) *echo.Echo {
 	if isDryrun {
 		e.GET("/questions", GetAllQuestionsDryrun)
 		e.POST("/genkun", PostGenkunDryrun)
+		e.POST("/question", PostQuestionDryrun)
 	} else {
 		e.GET("/questions", GetAllQuestions)
 		e.POST("/genkun", PostGenkun)
+		e.POST("/question", PostQuestion)
 	}
 
 	return e;

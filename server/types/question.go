@@ -4,9 +4,22 @@ import (
 	"database/sql"
 )
 
-type RawQuestions []RawQuestionData
+//
+type InputDataPostQuestion struct {
+	Statement string
+	Category string
+	Options []InputDataPostQuestionOptions
+}
 
-type RawQuestionData struct {
+type InputDataPostQuestionOptions struct {
+	GenkunID int
+	Correct interface{}
+}
+
+//
+type QueryGetAllQuestion []QueryGetAllQuestionOne
+
+type QueryGetAllQuestionOne struct {
 	ID int
 	Statement string
 	Category string
@@ -16,7 +29,7 @@ type RawQuestionData struct {
 	GenkunSrc string
 }
 
-func (q *RawQuestionData) Refs() []interface{} {
+func (q *QueryGetAllQuestionOne) Refs() []interface{} {
 	return []interface{}{
 		&q.ID,
 		&q.Statement,
@@ -28,7 +41,7 @@ func (q *RawQuestionData) Refs() []interface{} {
 	}
 }
 
-func (qs *RawQuestions) Processing() []interface{} {
+func (qs *QueryGetAllQuestion) GenerateResponseData() []interface{} {
 	var processed []interface{}
 
 	type ChoiceQuestionOption struct {
@@ -98,8 +111,8 @@ func (qs *RawQuestions) Processing() []interface{} {
 }
 
 func NewTestAllQuestionData() []interface{} {
-	rqs := RawQuestions{
-		RawQuestionData{
+	rqs := QueryGetAllQuestion{
+		QueryGetAllQuestionOne{
 			ID: 1,
 			Statement: "初代総理大臣は誰？",
 			Category: "choice",
@@ -108,7 +121,7 @@ func NewTestAllQuestionData() []interface{} {
 			GenkunName: "伊藤博文",
 			GenkunSrc: "itou_hirobumi.jpg",
 		},
-		RawQuestionData{
+		QueryGetAllQuestionOne{
 			ID: 1,
 			Statement: "初代総理大臣は誰？",
 			Category: "choice",
@@ -117,7 +130,7 @@ func NewTestAllQuestionData() []interface{} {
 			GenkunName: "大久保利通",
 			GenkunSrc: "okubo_toshimichi.jpg",
 		},
-		RawQuestionData{
+		QueryGetAllQuestionOne{
 			ID: 1,
 			Statement: "初代総理大臣は誰？",
 			Category: "choice",
@@ -126,7 +139,7 @@ func NewTestAllQuestionData() []interface{} {
 			GenkunName: "西郷隆盛",
 			GenkunSrc: "saigo_takamori.jpg",
 		},
-		RawQuestionData{
+		QueryGetAllQuestionOne{
 			ID: 1,
 			Statement: "初代総理大臣は誰？",
 			Category: "choice",
@@ -136,7 +149,7 @@ func NewTestAllQuestionData() []interface{} {
 			GenkunSrc: "kido_takayoshi.jpg",
 		},
 		//
-		RawQuestionData{
+		QueryGetAllQuestionOne{
 			ID: 2,
 			Statement: "一番最初に総理大臣へ就任した年が早い順に選択せよ",
 			Category: "order",
@@ -145,7 +158,7 @@ func NewTestAllQuestionData() []interface{} {
 			GenkunName: "伊藤博文",
 			GenkunSrc: "itou_hirobumi.jpg",
 		},
-		RawQuestionData{
+		QueryGetAllQuestionOne{
 			ID: 2,
 			Statement: "一番最初に総理大臣へ就任した年が早い順に選択せよ",
 			Category: "order",
@@ -154,7 +167,7 @@ func NewTestAllQuestionData() []interface{} {
 			GenkunName: "黒田清隆",
 			GenkunSrc: "kuroda_kiyotaka.jpg",
 		},
-		RawQuestionData{
+		QueryGetAllQuestionOne{
 			ID: 2,
 			Statement: "一番最初に総理大臣へ就任した年が早い順に選択せよ",
 			Category: "order",
@@ -163,7 +176,7 @@ func NewTestAllQuestionData() []interface{} {
 			GenkunName: "山縣有朋",
 			GenkunSrc: "yamagata_aritomo.jpg",
 		},
-		RawQuestionData{
+		QueryGetAllQuestionOne{
 			ID: 2,
 			Statement: "一番最初に総理大臣へ就任した年が早い順に選択せよ",
 			Category: "order",
@@ -173,5 +186,5 @@ func NewTestAllQuestionData() []interface{} {
 			GenkunSrc: "matsukata_masayoshi.jpg",
 		},
 	}
-	return rqs.Processing()
+	return rqs.GenerateResponseData()
 }

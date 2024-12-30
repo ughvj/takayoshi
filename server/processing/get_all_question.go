@@ -27,9 +27,9 @@ func GetAllQuestions(c echo.Context) error {
 	}
 	defer rows.Close()
 
-	var qs types.RawQuestions
+	var qs types.QueryGetAllQuestion
 	for rows.Next() {
-		var q types.RawQuestionData
+		var q types.QueryGetAllQuestionOne
 		err := rows.Scan(q.Refs()...)
 		if err != nil {
 			panic(err.Error())
@@ -37,5 +37,5 @@ func GetAllQuestions(c echo.Context) error {
 		qs = append(qs, q)
 	}
 
-	return c.JSON(http.StatusOK, qs.Processing())
+	return c.JSON(http.StatusOK, qs.GenerateResponseData())
 }

@@ -10,29 +10,31 @@ import (
 )
 
 func PostGenkunDryrun(c echo.Context) error {
-	inputGenkunNameKanji := c.FormValue("genkun_name_kanji")
-	inputGenkunNameHiragana := c.FormValue("genkun_name_hiragana")
-	inputGenkunSrc := c.FormValue("genkun_src")
+	var inputData types.InputDataPostGenkun
+	if err := c.Bind(&inputData); err != nil {
+		return err
+	}
 
-	template := "genkun is dryrunning. genkun_name_kanji: %s, genkun_name_hiragana: %s genkun_src: %s"
+	template := "post /genkun is dryrunning. name_kanji: %s, name_yomi_hiragana: %s src: %s"
 
 	return c.JSON(
 		http.StatusOK,
 		types.NewMessageResponse(
 			fmt.Sprintf(
 				template,
-				inputGenkunNameKanji,
-				inputGenkunNameHiragana,
-				inputGenkunSrc,
+				inputData.NameKanji,
+				inputData.NameYomiHiragana,
+				inputData.Src,
 			),
 		),
 	)
 }
 
 func PostGenkun(c echo.Context) error {
-	inputGenkunNameKanji := c.FormValue("genkun_name_kanji")
-	inputGenkunNameHiragana := c.FormValue("genkun_name_hiragana")
-	inputGenkunSrc := c.FormValue("genkun_src")
+	var inputData types.InputDataPostGenkun
+	if err := c.Bind(&inputData); err != nil {
+		return err
+	}
 
 	db, err := drivers.NewMysqlDriver()
 	if err != nil {
@@ -40,12 +42,12 @@ func PostGenkun(c echo.Context) error {
 	}
 	defer db.Close()
 
-	if checkAlreadyRegisteredNameKanji(inputGenkunNameKanji, db) {
-		return c.JSON(http.StatusOK, types.NewMessageResponse(inputGenkunNameKanji + " is already exists."))
+	if checkAlreadyRegisteredNameKanji(inputData.NameKanji, db) {
+		return c.JSON(http.StatusOK, types.NewMessageResponse(inputData.NameKanji + " is already exists."))
 	}
 
-	if checkAlreadyRegisteredNameHiragana(inputGenkunNameHiragana, db) {
-		return c.JSON(http.StatusOK, types.NewMessageResponse(inputGenkunNameHiragana + " is already exists."))
+	if checkAlreadyRegisteredNameHiragana(inputData.NameYomiHiragana, db) {
+		return c.JSON(http.StatusOK, types.NewMessageResponse(inputData.NameYomiHiragana + " is already exists."))
 	}
 
 
@@ -54,7 +56,7 @@ func PostGenkun(c echo.Context) error {
 		return err
 	}
 
-	_, err = db.Use().Exec(loadedDML.GetSQL(), inputGenkunNameKanji, inputGenkunNameHiragana, inputGenkunSrc)
+	_, err = db.Use().Exec(loadedDML.GetSQL(), inputData.NameKanji, inputData.NameYomiHiragana, inputData.Src)
 	if err != nil {
 		return err
 	}
