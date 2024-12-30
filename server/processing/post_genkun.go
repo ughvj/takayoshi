@@ -1,12 +1,33 @@
 package processing
 
 import (
+	"fmt"
 	"net/http"
 	"github.com/labstack/echo"
 	"github.com/ughvj/takamori/drivers"
 	"github.com/ughvj/takamori/dml"
 	"github.com/ughvj/takamori/types"
 )
+
+func PostGenkunDryrun(c echo.Context) error {
+	inputGenkunNameKanji := c.FormValue("genkun_name_kanji")
+	inputGenkunNameHiragana := c.FormValue("genkun_name_hiragana")
+	inputGenkunSrc := c.FormValue("genkun_src")
+
+	template := "genkun is dryrunning. genkun_name_kanji: %s, genkun_name_hiragana: %s genkun_src: %s"
+
+	return c.JSON(
+		http.StatusOK,
+		types.NewMessageResponse(
+			fmt.Sprintf(
+				template,
+				inputGenkunNameKanji,
+				inputGenkunNameHiragana,
+				inputGenkunSrc,
+			),
+		),
+	)
+}
 
 func PostGenkun(c echo.Context) error {
 	inputGenkunNameKanji := c.FormValue("genkun_name_kanji")

@@ -1,26 +1,14 @@
 package main
 
 import (
-	"net/http"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"flag"
+
 	"github.com/ughvj/takamori/processing"
 )
 
 func main() {
-	e := echo.New()
+	isDryrun := flag.Bool("dryrun", true, "dryrun mode (default: true)")
 
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{ "http://localhost:3000" },
-		AllowHeaders: []string{ echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept },
-	}))
-
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, Echo!")
-	})
-
-	e.GET("/questions", processing.GetAllQuestions)
-	e.POST("/genkun", processing.PostGenkun)
-
+	e := processing.Init(*isDryrun)
 	e.Start(":2434")
 }

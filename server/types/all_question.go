@@ -96,3 +96,82 @@ func (qs *RawQuestions) Processing() []interface{} {
 
 	return processed
 }
+
+func NewTestAllQuestionData() []interface{} {
+	rqs := RawQuestions{
+		RawQuestionData{
+			ID: 1,
+			Statement: "初代総理大臣は誰？",
+			Category: "choice",
+			CorrectChoice: sql.NullBool{Bool: true},
+			CorrectOrder: sql.NullInt32{Valid: false},
+			GenkunName: "伊藤博文",
+			GenkunSrc: "itou_hirobumi.jpg",
+		},
+		RawQuestionData{
+			ID: 1,
+			Statement: "初代総理大臣は誰？",
+			Category: "choice",
+			CorrectChoice: sql.NullBool{Bool: false},
+			CorrectOrder: sql.NullInt32{Valid: false},
+			GenkunName: "大久保利通",
+			GenkunSrc: "okubo_toshimichi.jpg",
+		},
+		RawQuestionData{
+			ID: 1,
+			Statement: "初代総理大臣は誰？",
+			Category: "choice",
+			CorrectChoice: sql.NullBool{Bool: false},
+			CorrectOrder: sql.NullInt32{Valid: false},
+			GenkunName: "西郷隆盛",
+			GenkunSrc: "saigo_takamori.jpg",
+		},
+		RawQuestionData{
+			ID: 1,
+			Statement: "初代総理大臣は誰？",
+			Category: "choice",
+			CorrectChoice: sql.NullBool{Bool: false},
+			CorrectOrder: sql.NullInt32{Valid: false},
+			GenkunName: "木戸孝允",
+			GenkunSrc: "kido_takayoshi.jpg",
+		},
+		//
+		RawQuestionData{
+			ID: 2,
+			Statement: "一番最初に総理大臣へ就任した年が早い順に選択せよ",
+			Category: "order",
+			CorrectChoice: sql.NullBool{Valid: false},
+			CorrectOrder: sql.NullInt32{Int32: 1},
+			GenkunName: "伊藤博文",
+			GenkunSrc: "itou_hirobumi.jpg",
+		},
+		RawQuestionData{
+			ID: 2,
+			Statement: "一番最初に総理大臣へ就任した年が早い順に選択せよ",
+			Category: "order",
+			CorrectChoice: sql.NullBool{Valid: false},
+			CorrectOrder: sql.NullInt32{Int32: 2},
+			GenkunName: "黒田清隆",
+			GenkunSrc: "kuroda_kiyotaka.jpg",
+		},
+		RawQuestionData{
+			ID: 2,
+			Statement: "一番最初に総理大臣へ就任した年が早い順に選択せよ",
+			Category: "order",
+			CorrectChoice: sql.NullBool{Valid: false},
+			CorrectOrder: sql.NullInt32{Int32: 3},
+			GenkunName: "山縣有朋",
+			GenkunSrc: "yamagata_aritomo.jpg",
+		},
+		RawQuestionData{
+			ID: 2,
+			Statement: "一番最初に総理大臣へ就任した年が早い順に選択せよ",
+			Category: "order",
+			CorrectChoice: sql.NullBool{Valid: false},
+			CorrectOrder: sql.NullInt32{Int32: 4},
+			GenkunName: "松方正義",
+			GenkunSrc: "matsukata_masayoshi.jpg",
+		},
+	}
+	return rqs.Processing()
+}

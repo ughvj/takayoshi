@@ -8,6 +8,10 @@ import (
 	"github.com/ughvj/takamori/types"
 )
 
+func GetAllQuestionsDryrun(c echo.Context) error {
+	return c.JSON(http.StatusOK, types.NewTestAllQuestionData())
+}
+
 func GetAllQuestions(c echo.Context) error {
 	db, err := drivers.NewMysqlDriver()
 	if err != nil {
