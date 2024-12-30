@@ -2,7 +2,7 @@ package processing
 
 import (
 	"net/http"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo"
 	"github.com/ughvj/takamori/drivers"
 	"github.com/ughvj/takamori/dml"
 	"github.com/ughvj/takamori/types"
