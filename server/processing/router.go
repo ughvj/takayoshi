@@ -28,10 +28,12 @@ func Init() *echo.Echo {
 	if conf.Dryrun {
 		fmt.Printf("Running on dryrun.")
 		e.GET("/questions", GetAllQuestionsDryrun)
+		e.GET("/genkuns", GetAllGenkunDryrun)
 		e.POST("/genkun", PostGenkunDryrun)
 		e.POST("/question", PostQuestionDryrun)
 	} else {
 		e.GET("/questions", GetAllQuestions)
+		e.GET("/genkuns", GetAllGenkun)
 		e.POST("/genkun", PostGenkun)
 		e.POST("/question", PostQuestion)
 	}

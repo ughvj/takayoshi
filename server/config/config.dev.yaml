@@ -3,7 +3,7 @@ allow_origins:
   - {{ env "ALLOW_ORIGIN1"}}
   - {{ env "ALLOW_ORIGIN2"}}
 db:
-  ms: {{ env "DMMS" }}
+  ms: {{ env "DBMS" }}
   name: {{ env "DB_NAME" }}
   user: {{ env "DB_USER" }}
   pass: {{ env "DB_PASS" }}
