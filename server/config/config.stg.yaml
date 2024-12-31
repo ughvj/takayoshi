@@ -1,0 +1,2 @@
+aaa: stg
+test: {{ env "HOGE" "default-value" }}

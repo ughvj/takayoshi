@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/ughvj/takamori/processing"
+	"github.com/ughvj/takayoshi/processing"
 )
 
 func main() {

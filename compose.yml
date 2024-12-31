@@ -9,6 +9,10 @@ services:
     tty: true
     volumes:
       - ./server:/go/src/takamori
+    environment:
+      ENV: "dev"
+      ALLOW_ORIGIN1: "http://localhost:3000"
+      ALLOW_ORIGIN2: "http://localhost:3001"
     container_name: server
   db:
     build:

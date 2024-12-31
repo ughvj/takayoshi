@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"github.com/labstack/echo"
-	"github.com/ughvj/takamori/drivers"
-	"github.com/ughvj/takamori/dml"
-	"github.com/ughvj/takamori/types"
+	"github.com/ughvj/takayoshi/drivers"
+	"github.com/ughvj/takayoshi/dml"
+	"github.com/ughvj/takayoshi/types"
 )
 
 func PostGenkunDryrun(c echo.Context) error {
@@ -51,12 +51,12 @@ func PostGenkun(c echo.Context) error {
 	}
 
 
-	loadedDML, err := dml.Load("insert_genkun")
+	loadedDML, err := dml.Loader.Get("insert_genkun")
 	if err != nil {
 		return err
 	}
 
-	_, err = db.Use().Exec(loadedDML.GetSQL(), inputData.NameKanji, inputData.NameYomiHiragana, inputData.Src)
+	_, err = db.Use().Exec(loadedDML, inputData.NameKanji, inputData.NameYomiHiragana, inputData.Src)
 	if err != nil {
 		return err
 	}
@@ -65,12 +65,12 @@ func PostGenkun(c echo.Context) error {
 }
 
 func checkAlreadyRegisteredNameKanji(target string, db *drivers.MysqlDriver) bool {
-	loadedDML, err := dml.Load("get_genkun_by_name_kanji")
+	loadedDML, err := dml.Loader.Get("get_genkun_by_name_kanji")
 	if err != nil {
 		return true
 	}
 
-	rows, err := db.Use().Query(loadedDML.GetSQL(), target)
+	rows, err := db.Use().Query(loadedDML, target)
 	if err != nil {
 		return true
 	}
@@ -84,12 +84,12 @@ func checkAlreadyRegisteredNameKanji(target string, db *drivers.MysqlDriver) boo
 }
 
 func checkAlreadyRegisteredNameHiragana(target string, db *drivers.MysqlDriver) bool {
-	loadedDML, err := dml.Load("get_genkun_by_name_yomi_hiragana")
+	loadedDML, err := dml.Loader.Get("get_genkun_by_name_yomi_hiragana")
 	if err != nil {
 		return true
 	}
 
-	rows, err := db.Use().Query(loadedDML.GetSQL(), target)
+	rows, err := db.Use().Query(loadedDML, target)
 	if err != nil {
 		return true
 	}

@@ -1,0 +1,2 @@
+## ignore .yaml only (.yml is prettier target)
+*.yaml

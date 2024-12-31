@@ -3,7 +3,7 @@ package processing
 import (
 	"net/http"
 	"github.com/labstack/echo"
-	"github.com/ughvj/takamori/types"
+	"github.com/ughvj/takayoshi/types"
 )
 
 func PostQuestionDryrun(c echo.Context) error {

@@ -3,9 +3,9 @@ package processing
 import (
 	"net/http"
 	"github.com/labstack/echo"
-	"github.com/ughvj/takamori/drivers"
-	"github.com/ughvj/takamori/dml"
-	"github.com/ughvj/takamori/types"
+	"github.com/ughvj/takayoshi/drivers"
+	"github.com/ughvj/takayoshi/dml"
+	"github.com/ughvj/takayoshi/types"
 )
 
 func GetAllQuestionsDryrun(c echo.Context) error {
@@ -19,9 +19,9 @@ func GetAllQuestions(c echo.Context) error {
 	}
 	defer db.Close()
 
-	loadedDML, err := dml.Load("get_all_question")
+	loadedDML, err := dml.Loader.Get("get_all_question")
 
-	rows, err := db.Use().Query(loadedDML.GetSQL())
+	rows, err := db.Use().Query(loadedDML)
 	if err != nil {
 		panic(err)
 	}

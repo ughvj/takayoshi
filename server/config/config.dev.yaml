@@ -1,0 +1,4 @@
+env: {{ env "ENV" }}
+allow_origins:
+  - {{ env "ALLOW_ORIGIN1"}}
+  - {{ env "ALLOW_ORIGIN2"}}

@@ -1,0 +1,2 @@
+aaa: prod
+test: {{ env "HOGE" "default-value" }}

@@ -5,13 +5,17 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+
+	"github.com/ughvj/takayoshi/config"
 )
 
 func Init(isDryrun bool) *echo.Echo {
 	e := echo.New()
 
+	gl := config.Loader.Get()
+
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{ "http://localhost:3000" },
+		AllowOrigins: gl.AllowOrigins,
 		AllowHeaders: []string{ echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept },
 	}))
 
