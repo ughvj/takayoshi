@@ -2,7 +2,6 @@ package processing
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -11,19 +10,17 @@ import (
 )
 
 func Init() *echo.Echo {
-	e := echo.New()
-
 	conf := config.Loader.Get()
 	fmt.Printf("%+v\n", conf)
 
+	e := echo.New()
+
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: conf.AllowOrigins,
 		AllowHeaders: []string{ echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept },
 	}))
-
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, Echo!")
-	})
 
 	if conf.Dryrun {
 		fmt.Printf("Running on dryrun.")

@@ -39,7 +39,3 @@ func NewMysqlDriver() (*MysqlDriver, error) {
 func (d *MysqlDriver) Use() *sql.DB {
 	return d.db
 }
-
-func (d *MysqlDriver) Close() {
-	d.db.Close()
-}

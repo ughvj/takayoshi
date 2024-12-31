@@ -17,7 +17,7 @@ func GetAllQuestions(c echo.Context) error {
 	if err != nil {
 		panic(err)
 	}
-	defer db.Close()
+	defer db.Use().Close()
 
 	loadedDML, err := dml.Loader.Get("get_all_question")
 

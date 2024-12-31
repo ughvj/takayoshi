@@ -40,7 +40,7 @@ func PostGenkun(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	defer db.Close()
+	defer db.Use().Close()
 
 	if checkAlreadyRegisteredNameKanji(inputData.NameKanji, db) {
 		return c.JSON(http.StatusOK, types.NewMessageResponse(inputData.NameKanji + " is already exists."))

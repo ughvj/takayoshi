@@ -6,5 +6,5 @@ import (
 
 func main() {
 	e := processing.Init()
-	e.Start(":2434")
+	e.Logger.Fatal(e.Start(":2434"))
 }

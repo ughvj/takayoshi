@@ -4,6 +4,9 @@ import (
 	"io"
 	"io/fs"
 	"embed"
+	"bytes"
+
+	"text/template"
 )
 
 //go:embed *.sql
@@ -31,4 +34,33 @@ func (l *DmlList) Get(name string) (string, error) {
 	}
 
 	return string(b), nil
+}
+
+func (l *DmlList) EmbedAndGet(name string, embedded string) (string, error) {
+	f, err := l.fs.Open(name + ".sql")
+	if err != nil {
+		return "", nil
+	}
+
+	b, err := io.ReadAll(f)
+	if err != nil {
+		return "", nil
+	}
+
+	funcMap := template.FuncMap{
+		"EMBEDDED": func() string {
+			return embedded
+		},
+	}
+	tmpl, err := template.New("name").Funcs(funcMap).Parse(string(b))
+	if err != nil {
+		return "", err
+	}
+	w := bytes.NewBuffer([]byte{})
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		return "", err
+	}
+
+	return w.String(), nil
 }
