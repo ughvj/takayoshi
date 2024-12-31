@@ -2,3 +2,11 @@ env: {{ env "ENV" }}
 allow_origins:
   - {{ env "ALLOW_ORIGIN1"}}
   - {{ env "ALLOW_ORIGIN2"}}
+db:
+  ms: {{ env "DMMS" }}
+  name: {{ env "DB_NAME" }}
+  user: {{ env "DB_USER" }}
+  pass: {{ env "DB_PASS" }}
+  addr: {{ env "DB_ADDR" }}
+  net: {{ env "DB_NET" }}
+  collation: {{ env "DB_COLLATION" }}

@@ -11,8 +11,16 @@ services:
       - ./server:/go/src/takamori
     environment:
       ENV: "dev"
+      DRYRUN: true
       ALLOW_ORIGIN1: "http://localhost:3000"
       ALLOW_ORIGIN2: "http://localhost:3001"
+      DBMS: "mysql"
+      DB_NAME: "takamori"
+      DB_USER: "takamori"
+      DB_PASS: "password"
+      DB_ADDR: "db:3306"
+      DB_NET: "tcp"
+      DB_COLLATION: "utf8mb4_unicode_ci"
     container_name: server
   db:
     build:

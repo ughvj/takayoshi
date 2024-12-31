@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/go-sql-driver/mysql"
+	"github.com/ughvj/takayoshi/config"
 )
 
 type MysqlDriver struct {
@@ -12,21 +13,23 @@ type MysqlDriver struct {
 }
 
 func NewMysqlDriver() (*MysqlDriver, error) {
+	conf := config.Loader.Get()
+
 	jst, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
 		return nil, err
 	}
 	c := mysql.Config{
-		DBName:    "takamori",
-		User:      "takamori",
-		Passwd:    "password",
-		Addr:      "db:3306",
-		Net:       "tcp",
+		DBName:    conf.Db.Name,
+		User:      conf.Db.User,
+		Passwd:    conf.Db.Pass,
+		Addr:      conf.Db.Addr,
+		Net:       conf.Db.Net,
 		ParseTime: true,
-		Collation: "utf8mb4_unicode_ci",
+		Collation: conf.Db.Collation,
 		Loc:       jst,
 	}
-	db, err := sql.Open("mysql", c.FormatDSN())
+	db, err := sql.Open(conf.Db.Ms, c.FormatDSN())
 	if err != nil {
 		return nil, err
 	}

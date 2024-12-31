@@ -128,7 +128,7 @@ func NewTestAllQuestionData() []interface{} {
 			CorrectChoice: sql.NullBool{Bool: false},
 			CorrectOrder: sql.NullInt32{Valid: false},
 			GenkunName: "大久保利通",
-			GenkunSrc: "okubo_toshimichi.jpg",
+			GenkunSrc: "ookubo_toshimichi.jpg",
 		},
 		QueryGetAllQuestionOne{
 			ID: 1,
@@ -137,7 +137,7 @@ func NewTestAllQuestionData() []interface{} {
 			CorrectChoice: sql.NullBool{Bool: false},
 			CorrectOrder: sql.NullInt32{Valid: false},
 			GenkunName: "西郷隆盛",
-			GenkunSrc: "saigo_takamori.jpg",
+			GenkunSrc: "saigou_takamori.jpg",
 		},
 		QueryGetAllQuestionOne{
 			ID: 1,

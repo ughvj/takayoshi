@@ -1,6 +1,7 @@
 package processing
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -9,13 +10,14 @@ import (
 	"github.com/ughvj/takayoshi/config"
 )
 
-func Init(isDryrun bool) *echo.Echo {
+func Init() *echo.Echo {
 	e := echo.New()
 
-	gl := config.Loader.Get()
+	conf := config.Loader.Get()
+	fmt.Printf("%+v\n", conf)
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: gl.AllowOrigins,
+		AllowOrigins: conf.AllowOrigins,
 		AllowHeaders: []string{ echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept },
 	}))
 
@@ -23,7 +25,8 @@ func Init(isDryrun bool) *echo.Echo {
 		return c.String(http.StatusOK, "Hello, Echo!")
 	})
 
-	if isDryrun {
+	if conf.Dryrun {
+		fmt.Printf("Running on dryrun.")
 		e.GET("/questions", GetAllQuestionsDryrun)
 		e.POST("/genkun", PostGenkunDryrun)
 		e.POST("/question", PostQuestionDryrun)

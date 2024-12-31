@@ -17,11 +17,6 @@ var ConfFS embed.FS
 
 var Loader = NewGlobalLoader(ConfFS)
 
-type Config struct {
-	Env string `yaml:"env"`
-	AllowOrigins []string `yaml:"allow_origins"`
-}
-
 type GlobalLoader struct {
 	fs fs.FS
 	conf *Config
