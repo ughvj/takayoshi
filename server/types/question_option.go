@@ -23,7 +23,7 @@ func (qos *QuestionOptions) GenerateBulkSentence() string {
 		}
 
 		if (qo.CorrectOrder.Valid) {
-			elements = append(elements, string(qo.CorrectOrder.Int32))
+			elements = append(elements, strconv.Itoa(int(qo.CorrectOrder.Int32)))
 		} else {
 			elements = append(elements, "null")
 		}

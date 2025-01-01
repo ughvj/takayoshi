@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 	"errors"
-	"fmt"
 
 	"github.com/labstack/echo"
 	"github.com/ughvj/takayoshi/types"
@@ -54,7 +53,6 @@ func PostQuestion(c echo.Context) error {
 		genkunIds = append(genkunIds, strconv.Itoa(opt.GenkunID))
 	}
 	loadedDML, _ = dml.Loader.EmbedAndGet("get_genkun_by_ids_embedded", "(" + strings.Join(genkunIds, ",") + ")")
-	fmt.Printf("%s", loadedDML)
 	rows, err := db.Use().Query(loadedDML)
 	if err != nil {
 		tx.Rollback()
@@ -89,10 +87,10 @@ func PostQuestion(c echo.Context) error {
 				return errors.New("failed: bool converted")
 			}
 		case "order":
-			v, ok := opt.Correct.(int32)
+			v, ok := opt.Correct.(float64)
 			if ok {
 				qo.CorrectChoice = sql.NullBool{Valid: false}
-				qo.CorrectOrder = sql.NullInt32{Valid: true, Int32: v}
+				qo.CorrectOrder = sql.NullInt32{Valid: true, Int32: int32(v)}
 			} else {
 				tx.Rollback()
 				return errors.New("failed: int32 converted")
